@@ -142,7 +142,7 @@ public class UIMediator<T> :  BaseMediator where T:BasePanel
         m_Panel.transform.SetParent(tparent);
         SetOrgPos();
 
-        GameObject panObj;
+        GameObject panObj
         if (!GUIManager.m_panelList.TryGetValue(m_PanelName,out panObj) && !m_isprop)
         {
             GUIManager.m_panelList.Add(m_PanelName, go);
