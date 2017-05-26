@@ -14,7 +14,7 @@ using cn.bmob.Extensions;
 public class HelloBmob : MonoBehaviour
 {
 
-		private static BmobUnity Bmob;
+		public static BmobUnity Bmob;
 
 		// Use this for initialization
 		void Start ()
@@ -30,7 +30,7 @@ public class HelloBmob : MonoBehaviour
 		{
 				if (Input.GetKeyDown (KeyCode.Escape)) {
 						Application.Quit ();
-				}
+				} 
 		}
 
 		static String TABLENAME = "T_BMOB_API";
@@ -196,31 +196,7 @@ public class HelloBmob : MonoBehaviour
 				});
 		}
 
-		// 如果程序需要为用户添加额外的字段，需要继承BmobUser
-		public class MyBmobUser : BmobUser
-		{
-				public BmobInt life { get; set; }
-
-				public BmobInt attack { get; set; }
-
-				public override void write (BmobOutput output, bool all)
-				{
-						base.write (output, all);
-
-						output.Put ("life", this.life);
-						output.Put ("attack", this.attack);
-				}
-
-				public override void readFields (BmobInput input)
-				{
-						base.readFields (input);
-
-						this.life = input.getInt ("life");
-						this.attack = input.getInt ("attack");
-				}
-		}
-
-		void Signup ()
+    void Signup ()
 		{
 				MyBmobUser user = new MyBmobUser ();
 				user.username = "test";

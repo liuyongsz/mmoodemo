@@ -2,19 +2,31 @@
 using PureMVC.Interfaces;
 using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
 using UnityEngine.UI;
 using AssetBundles;
 using UnityEngine.Events;
 using XLua;
+
+using UnityEngine;
+using System.IO;
+using System.Collections;
+using cn.bmob.api;
+using cn.bmob.io;
+using cn.bmob.tools;
+using System.Net;
+using cn.bmob.json;
+using cn.bmob.response;
+using cn.bmob.Extensions;
+
+
 [Hotfix]
 public class loginpanel : BasePanel {
 
     public UISprite btnClose;
-    public UISprite btnEnter;
+    public UIButton btnBegin;
     public UISprite btnReg;
-    public UIInput iptUser;
-    public UIInput iptPwd;
+    public UIInput txtAccount;
+    public UIInput txtPassword;
 }
 
 [Hotfix]
@@ -37,13 +49,13 @@ public class LoginMediator : UIMediator<loginpanel>
     }
     protected override void OnShow(INotification notification)
     {
-        if (PlayerPrefs.HasKey("UserName") && PlayerPrefs.HasKey("UserPass"))
-        {
-            panel.iptUser.value = PlayerPrefs.GetString("UserName");
-            user = panel.iptUser.value;
-            panel.iptPwd.value = PlayerPrefs.GetString("UserPass");
-            pass = panel.iptPwd.value;
-        }
+        //if (PlayerPrefs.HasKey("UserName") && PlayerPrefs.HasKey("UserPass"))
+        //{
+        //    panel.iptUser.value = PlayerPrefs.GetString("UserName");
+        //    user = panel.iptUser.value;
+        //    panel.iptPwd.value = PlayerPrefs.GetString("UserPass");
+        //    pass = panel.iptPwd.value;
+        //}
 
         Facade.SendNotification(NotificationID.UpdateResources_Close);
     }
@@ -52,7 +64,7 @@ public class LoginMediator : UIMediator<loginpanel>
     {
         //UIEventListener.Get(m_Panel.btnClose.gameObject).onClick = OnClick;
         //UIEventListener.Get(m_Panel.btnEnter.gameObject).onClick = OnClick;
-        //UIEventListener.Get(m_Panel.btnReg.gameObject).onClick = OnClick;
+        UIEventListener.Get(m_Panel.btnBegin.gameObject).onClick = OnClick;
 
     }
     /// <summary>
@@ -60,31 +72,30 @@ public class LoginMediator : UIMediator<loginpanel>
     /// </summary>
     private void OnClick(GameObject go)
     {
-        if (go == panel.btnClose.gameObject)
+        if (go == panel.btnBegin.gameObject)
         {
-            ClosePanel(null);
-        }
-        else if (go == panel.btnEnter.gameObject)
-        {
-            if (panel.iptUser.value.Trim(' ') == string.Empty || panel.iptPwd.value.Trim(' ') == string.Empty)
-            {
-                GUIManager.SetPromptInfo(TextManager.GetUIString("UIServer1"), null);
-                return;
-            }
-            user = panel.iptUser.value.Trim(' ');
-            pass = panel.iptPwd.value.Trim(' ');
-            PlayerPrefs.SetString("UserName", user);
-            PlayerPrefs.SetString("UserPass", pass);
-            List<object> list = new List<object>();
-            list.Add(user);
-            list.Add(pass);
-            Facade.SendNotification(NotificationID.Sever_Show, list);
-        }
-        else if (go == panel.btnReg.gameObject)
-        {
-            LoginProxy.Instance.Send_RegisterAccount(m_Panel.iptUser.text.Trim(), m_Panel.iptPwd.text.Trim());
+            string account = panel.txtAccount.value;
+            string passwd = panel.txtPassword.value;
+            HelloBmob.Bmob.Login<MyBmobUser>(account, passwd, OnBack_Login);
         }
     }
+
+    public void OnBack_Login<T>(T response, cn.bmob.exception.BmobException exception)
+    {
+        if (exception != null)
+        {
+            Debug.Log("登录失败, 失败原因为： " + exception.Message);
+            return;
+        }
+
+        //print("登录成功, @" + resp.username + "(" + resp.life + ")$[" + resp.sessionToken + "]");
+
+        //print("登录成功, 当前用户对象Session： " + BmobUser.CurrentUser.sessionToken);
+
+        ClosePanel(null);
+
+    }
+
 
     protected override void OnDestroy()
     {
