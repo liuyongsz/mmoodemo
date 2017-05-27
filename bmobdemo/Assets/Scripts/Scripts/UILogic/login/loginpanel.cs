@@ -64,8 +64,8 @@ public class LoginMediator : UIMediator<loginpanel>
     {
         //UIEventListener.Get(m_Panel.btnClose.gameObject).onClick = OnClick;
         //UIEventListener.Get(m_Panel.btnEnter.gameObject).onClick = OnClick;
+        UIEventListener.Get(m_Panel.btnReg.gameObject).onClick = OnClick;
         UIEventListener.Get(m_Panel.btnBegin.gameObject).onClick = OnClick;
-
     }
     /// <summary>
     /// 点击事件
@@ -77,6 +77,20 @@ public class LoginMediator : UIMediator<loginpanel>
             string account = panel.txtAccount.value;
             string passwd = panel.txtPassword.value;
             HelloBmob.Bmob.Login<MyBmobUser>(account, passwd, OnBack_Login);
+        }
+        else if (go == panel.btnReg.gameObject)
+        {
+            string account = panel.txtAccount.value;
+            string passwd = panel.txtPassword.value;
+
+            MyBmobUser user = new MyBmobUser();
+            user.username = account;
+            user.password = passwd;
+            user.email = "mb_qp@bmob.cn";
+            user.life = 0;
+            user.attack = 0;
+
+            HelloBmob.Bmob.Signup<MyBmobUser>(user, OnBack_SignUp);
         }
     }
 
@@ -94,6 +108,17 @@ public class LoginMediator : UIMediator<loginpanel>
 
         ClosePanel(null);
 
+    }
+
+    public void OnBack_SignUp<T>(T response, cn.bmob.exception.BmobException exception)
+    {
+        if (exception != null)
+        {
+            Debug.Log("注册失败, 失败原因为： " + exception.Message);
+            return;
+        }
+
+        Debug.Log("注册成功");
     }
 
 
