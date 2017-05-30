@@ -35,11 +35,11 @@ public class GUIManager
     public static void ShowLoadingUI()
     {
         HideLoadingUI();
-        GameObject obj = GameObject.Instantiate<GameObject>(Resources.Load("loadingpanel") as GameObject);
-        m_loading = ScriptHelper.BindField(obj.transform, "loading") as loading;
-        Transform tparent = Main.GetUIRoot().FindChild("Camera");
-        m_loading.transform.SetParent(tparent);
-        m_loading.transform.localPosition = Vector3.zero;
+        //GameObject obj = GameObject.Instantiate<GameObject>(Resources.Load("loadingpanel") as GameObject);
+        //m_loading = ScriptHelper.BindField(obj.transform, "loading") as loading;
+        //Transform tparent = Main.GetUIRoot().FindChild("Camera");
+        //m_loading.transform.SetParent(tparent);
+        //m_loading.transform.localPosition = Vector3.zero;
     }
 
     /// <summary>隐藏界面</summary>

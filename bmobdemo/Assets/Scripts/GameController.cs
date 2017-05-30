@@ -8,13 +8,17 @@ using System.Xml.Serialization;
 public class GameController : MonoBehaviour
 {
     public int basePointPerMatch;//底分
-    private int multiples;//全场倍数
+    private static int multiples = 0;//全场倍数
 
     // Use this for initialization
     void Start()
     {
+        if (multiples > 0)
+            return;
+
         multiples = 1;
         basePointPerMatch = 100;
+
         InitMenu();
     }
 

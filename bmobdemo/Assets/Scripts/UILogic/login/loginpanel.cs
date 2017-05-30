@@ -24,7 +24,7 @@ public class loginpanel : BasePanel {
 
     public UISprite btnClose;
     public UIButton btnBegin;
-    public UISprite btnReg;
+    public UIButton btnReg;
     public UIInput txtAccount;
     public UIInput txtPassword;
 }
@@ -108,6 +108,7 @@ public class LoginMediator : UIMediator<loginpanel>
 
         ClosePanel(null);
 
+        GameProxy.Instance.GotoMainCity();
     }
 
     public void OnBack_SignUp<T>(T response, cn.bmob.exception.BmobException exception)

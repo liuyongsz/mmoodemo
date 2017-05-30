@@ -107,7 +107,7 @@ public class GameProxy : Proxy<GameProxy>
     /// </summary>
     public void GotoMainCity()
     {
-        Facade.SendNotification(NotificationID.CHANGE_SCENE, new SceneVO("s_home", "s_home", false, EScene.MAINCITY));
+        Facade.SendNotification(NotificationID.CHANGE_SCENE, new SceneVO("home_scene", "home_scene", false, EScene.MAINCITY));
     }
 
     public void GotoPVE(int cloneId = 1001)
@@ -150,9 +150,9 @@ public class GameProxy : Proxy<GameProxy>
                 break;
             case EScene.MAINCITY:
                
-                Facade.SendNotification(NotificationID.Login_Hide);
-                Facade.SendNotification(NotificationID.Show_Main);
-                Facade.SendNotification(NotificationID.Gold_Show);
+                //Facade.SendNotification(NotificationID.Login_Hide);
+                //Facade.SendNotification(NotificationID.Show_Main);
+                //Facade.SendNotification(NotificationID.Gold_Show);
                 break;
             case EScene.BATTLE:
 

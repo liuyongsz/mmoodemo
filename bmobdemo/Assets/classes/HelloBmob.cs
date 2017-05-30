@@ -347,6 +347,7 @@ public class HelloBmob : MonoBehaviour
 
 		void OnGUI ()
 		{
+        return;
 				float scale = 2.0f;
 
 				if (Application.platform == RuntimePlatform.IPhonePlayer) {

@@ -3,7 +3,6 @@ using System.Collections;
 using PureMVC.Interfaces;
 using System;
 using System.Collections.Generic;
-using Holoville.HOTween;
 
 public class guildmainpanel: BasePanel
 {
@@ -153,18 +152,6 @@ public class GuildMainMediator : UIMediator<guildmainpanel>
 
         if (string.IsNullOrEmpty(mMyGuild.notice) || panel == null || panel.notice_label == null)
             return;
-        panel.notice_label.text = mMyGuild.notice;
-        float pox = 300 + panel.notice_label.width / 2;
-
-        float poy = panel.notice_label.transform.localPosition.y;
-
-        panel.notice_label.transform.localPosition = new Vector3(pox, poy, 0);
-        Vector3 endPos = new Vector3(-pox,poy,0);
-        HOTween.Restart(panel.notice_label);
-        TweenParms parms = new TweenParms();
-        parms.Prop("localPosition", endPos);
-        parms.OnComplete(OnFinishNoticeTween);
-        HOTween.To(panel.notice_label.transform, 10f, parms);
 
     }
     private void OnFinishNoticeTween()
